@@ -27,7 +27,7 @@ navegador.get("https://web.whatsapp.com/")
 while len(navegador.find_elements(By.ID,"side")) < 1:
     time.sleep(1)
 
-texto_postagem = f""
+texto_postagem = f"Estou aqui pra comunicar o encerramento das atividades do AUA, mas antes de tudo, quero *AGRADECER* você por permanecer resiliente na dificil tarefa de ter um pequeno negócio em nossa região, você é parte da solução. Também quero agradecer por confiar em nossa equipe para ajudar a mostrar seu negócio para mais pessoas, aprendemos muito! E esperamos ter retribuido."
 link_postagem = "https://pertinhodecasa.com.br"
 chamada = "[OBRIGADO E ATÉ BREVE!]"
 numero_nao_encontrado = []
