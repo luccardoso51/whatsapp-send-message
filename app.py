@@ -4,11 +4,12 @@ import pandas as pd
 import selenium
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 import time
 import urllib
 
-# contatos_df = pd.read_excel("test.xlsx")
-contatos_df = pd.read_excel("Lista_de_Empreendedores.xlsx")
+contatos_df = pd.read_excel("test.xlsx")
+# contatos_df = pd.read_excel("Lista_de_Empreendedores.xlsx")
 
 
 display(contatos_df)
@@ -21,13 +22,14 @@ o.add_argument(
 navegador = selenium.webdriver.Chrome(
     executable_path="./chromedriver")
 navegador.get("https://web.whatsapp.com/")
+    
 
-while len(navegador.find_elements_by_id("side")) < 1:
+while len(navegador.find_elements(By.ID,"side")) < 1:
     time.sleep(1)
 
-texto_postagem = f"O dia dos namorados está chegando! E com ele nossos clientes vão estar a procura de presentes para seus amados e amadas, e com isso trazendo mais vendas para os empreendedores! \n\nPor isso, estamos procurando estabelecimentos que irão fazer *PROMOÇÕES ou tem PRODUTOS PARA ESSA DATA* queremos fazer um post em nosso instagram (@aua.conecta) para ajuda-los a alavancar suas vendas! \n\nCaso seu negócio vá fazer algo do tipo, por favor me diga para que nos possamos *incluir seu estabelecimento em nossa postagem!*"
-link_postagem = "https://forms.gle/fYCJRgakFbUvRzXj9"
-chamada = "[DIA DOS NAMORADOS NO AUA]"
+texto_postagem = f"Estou aqui pra comunicar o encerramento das atividades do AUA, mas antes de tudo, quero *AGRADECER* você por permanecer resiliente na dificil tarefa de ter um pequeno negócio em nossa região, você é parte da solução. Também quero agradecer por confiar em nossa equipe para ajudar a mostrar seu negócio para mais pessoas, aprendemos muito! E esperamos ter retribuido."
+link_postagem = "https://pertinhodecasa.com.br"
+chamada = "[OBRIGADO E ATÉ BREVE!]"
 numero_nao_encontrado = []
 
 # i é o indice na planilha
@@ -37,18 +39,18 @@ for i, contato in enumerate(contatos_df['Contato']):
         numero_contato = contatos_df.loc[i, "Contato"]
 
         texto = urllib.parse.quote(
-            f"*{chamada}* \n\nBomm diaa {pessoa}!\n{texto_postagem}\n\nQualquer dúvida, fique a vontade para perguntar ;)")
+            f"*{chamada}* \n\nOlá {pessoa} tudo bem?!\n\n{texto_postagem}\n\nPor fim, venho comunicar o Aplicativo AUA - Compre do Pequeno irá ser desligado em breve, agora, seremos parte de uma família maior. A *Pertinho de Casa*, essa plataforma exclusiva e GRATUITA para pequenos empreendedores que te convido para fazer parte, o link para conhecer esta aqui embaixo \n\n*MUITO OBRIGADO POR TUDO, E ATÉ UMA PRÓXIMA!*")
 
         link_mensagem = f"https://web.whatsapp.com/send?phone=55{numero_contato}&text={texto}"
 
         navegador.get(link_mensagem)
-        while len(navegador.find_elements_by_id("side")) < 1:
-            time.sleep(10)
-        text_input_element = navegador.find_element_by_xpath(
-            '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[2]')
+        while len(navegador.find_elements(By.ID,"side")) < 1:
+            time.sleep(1)
+        text_input_element = navegador.find_element(By.XPATH,
+            '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[1]/p')
         print(text_input_element)
         text_input_element.send_keys(Keys.ENTER)
-        time.sleep(10)
+        time.sleep(5)
     except:
         numero_nao_encontrado.append(pessoa)
         continue
